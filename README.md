@@ -1,13 +1,12 @@
-<img align="right" src="SI-logo.jpg">
+-<img align="right" src="SI-logo.jpg">
 
-[![Continuous Integration](https://github.com/bernedom/SI/workflows/CI/badge.svg?branch=master)](https://github.com/bernedom/SI/actions?query=workflow%3ACI)
+[![Continuous Integration](https://github.com/bernedom/SI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bernedom/SI/actions?query=workflow%3ACI)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ec7f65662b91480a9968bd77bd32c66c)](https://www.codacy.com/app/bernedom/SI?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bernedom/SI&amp;utm_campaign=Badge_Grade)
-[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/bernedom/SI.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bernedom/SI/context:cpp)
-[![Continuous Benchmark](https://github.com/bernedom/SI/workflows/Continuous%20Benchmark/badge.svg?branch=master)](https://si.dominikberner.ch/dev/bench/)
-[![API Documentation](https://github.com/bernedom/SI/workflows/API%20documentation/badge.svg?branch=master)](https://si.dominikberner.ch/doc/)
+[![API Documentation](https://github.com/bernedom/SI/actions/workflows/api-doc.yml/badge.svg?branch=main)](https://si.dominikberner.ch/doc/)
+[![CodeQL](https://github.com/bernedom/SI/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/bernedom/SI/actions?query=workflow%3ACodeQL)
 
 [![GitHub Releases](https://img.shields.io/github/release/bernedom/SI.svg)](https://github.com/bernedom/SI/releases)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/bernedom/SI/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/bernedom/SI/main/LICENSE)
 
 # SI - Type safety for physical units
 
@@ -122,15 +121,20 @@ Non standard units are not regulated by the [BIPM](https://www.bipm.org/) but ar
 
 SI is a header-only library that uses **C++17** features. Building is tested using cmake > 3.23 and verified for g++7, g++8, clang5, clang6, clang7, msvc 19, and AppleClang 10.0. I recommend using  **conan 2.0** to download any dependencies for testing, but can be used without it, if the tests are not built. 
 
-to build using conan to fetch the dependencies and cmake to build the project, run the following commands:
+SI uses CMakeDeps generator of conan to find dependencies. To install the dependencies use
 
 ```bash
 conan install . --output-folder=build --build=missing --settings=build_type=Debug
-cmake -B build -S . --toolchain ./build/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug
-cmake --build build -- -j $(nproc)
 ```
 
-substitute `--config Debug` with `--config Release` for optimized builds
+substitute `--settings=build_type=Debug` with `--settings=build_type=Release` to switch between debug and release builds.
+
+By using the CMAkeDeps generator, you can either build manually or use the CMake presets provided. 
+
+```bash
+cmake --preset=ci-ninja-debug
+cmake --build build
+```
 
 ### Installing
 
